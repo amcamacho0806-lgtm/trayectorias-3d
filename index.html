@@ -554,7 +554,7 @@ function cargarCuerpo(){
   const nombre=CUERPO_MODELO.archivo, ext=nombre.split('.').pop().toLowerCase();
   const fallo=()=>{estadoC.textContent='No se encontró '+nombre+': se muestra el maniquí esquemático.';};
   const fin=obj=>{
-    matCuerpoReal=new THREE.MeshPhongMaterial({color:0xc9a58f,shininess:10,transparent:true,opacity:+document.getElementById('opCuerpo').value,depthWrite:false,side:THREE.DoubleSide});
+    matCuerpoReal=new THREE.MeshPhongMaterial({color:0xc9a58f,shininess:10,transparent:true,opacity:+document.getElementById('opCuerpo').value,depthWrite:false,side:THREE.FrontSide});
     obj.traverse(o=>{if(o.isMesh){o.material=matCuerpoReal;o.renderOrder=3;}});
     const c=new THREE.Box3().setFromObject(obj).getCenter(new THREE.Vector3());
     obj.position.sub(c); bodyRot.add(obj); cuerpoReal=true;
