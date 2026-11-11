@@ -537,6 +537,7 @@ document.getElementById('copiar').onclick=async()=>{
 document.getElementById('vCraneo').onchange=e=>{(modelo?raiz:craneo).visible=e.target.checked;};
 document.getElementById('vMalla').onchange=e=>{mallaC.visible=e.target.checked;};
 document.getElementById('vCerebro').onchange=e=>{cerebro.visible=e.target.checked;};
+  craneo.visible=false; mallaC.visible=false;
 document.getElementById('opModelo').oninput=e=>{matsModelo.forEach(m=>{m.opacity=+e.target.value;});};
 document.getElementById('ajusteModelo').addEventListener('input',e=>{
   const k=e.target.dataset.m; if(!k)return; const v=parseFloat(e.target.value)||0;
