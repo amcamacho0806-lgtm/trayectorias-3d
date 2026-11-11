@@ -381,7 +381,7 @@ function construirCuerpo(){
 function ajustarCuerpoReal(){
   const b=params(CASOS[activo]||CASOS[0]), M=CUERPO_MODELO, rd=Math.PI/180;
   bodyRaiz.scale.set(1,1,1); bodyRaiz.position.set(0,0,0);
-  bodyRot.rotation.set(M.rot[0]*rd,M.rot[1]*rd,M.rot[2]*rd); bodyRot.updateMatrixWorld(true);
+ bodyRot.rotation.set(M.rot[0]*rd,M.rot[1]*rd,M.rot[2]*rd); bodyRaiz.updateMatrixWorld(true);
   const box=new THREE.Box3().setFromObject(bodyRot), c=box.getCenter(new THREE.Vector3()), t=box.getSize(new THREE.Vector3());
   const k=b.h/(t.y||1);
   bodyRaiz.scale.setScalar(k);
