@@ -41,10 +41,8 @@ details{font-size:13px;color:#9db4ba;margin-bottom:12px}
     <h1>Trayectorias de disparo entre orificios</h1>
     <p class="nota">Cada caso une el orificio de entrada con el de salida y calcula la longitud y la dirección del trayecto. El maniquí se ajusta a la altura, el peso y la complexión de cada caso. Medidas en centímetros; es un esquema didáctico y no reemplaza una valoración pericial.</p>
     <div class="vis">
-      <label><input type="checkbox" id="vCuerpo" checked> Cuerpo</label>
       <label><input type="checkbox" id="vEjes" checked> Ejes</label>
       <label><input type="checkbox" id="vAng" checked> Ángulos</label>
-      <label><input type="checkbox" id="vSolido" checked> Cuerpo sólido</label>
       <label id="lCabello" hidden><input type="checkbox" id="vCabello" checked> Cabello y ojos</label>
     </div>
     <div class="botones">
@@ -213,7 +211,7 @@ function construirCuerpo(){
 /* cuerpo realista: se escala a la altura del caso y se coloca con el vértex en y = 0 */
 let pielMesh=null, ptsPiel=null, matsPiel=[];
 function aplicarOpacidad(v){
-  const sol=document.getElementById('vSolido').checked, o=sol?1:v;           // sólido = 100 % opaco
+  const sol=true, o=1;         // sólido = 100 % opaco
   matsPiel.forEach(m=>{m.transparent=o<1;m.opacity=o;m.depthWrite=o>=1;m.alphaTest=0;m.needsUpdate=true;});
   matCuerpo.opacity=sol?1:0.3; matCuerpo.transparent=!sol; matCuerpo.depthWrite=sol; matCuerpo.needsUpdate=true;
   document.getElementById('opCuerpo').disabled=sol;
@@ -300,7 +298,7 @@ function marcador(o,P,color){
   const s=o.cara==='posterior'?-1:1; if(s<0)g.rotation.y=Math.PI;
   g.position.set(P.x,P.y,P.z+s*0.3); return g;
 }
-const solido=()=>document.getElementById('vSolido').checked;
+const solido=()=>true;
 const mc=(color,op)=>new THREE.MeshBasicMaterial({color,depthTest:solido(),transparent:true,opacity:op===undefined?0.95:op});
 function barraL(P,Q,r,color,op,punta){ // barra de P a Q, con punta cónica opcional en Q; se ve a través del cuerpo
   const d=Q.clone().sub(P), L=d.length(); if(L<0.01)return; d.normalize();
@@ -427,8 +425,6 @@ document.getElementById('agregar').onclick=()=>{
   panel();
 };
 document.getElementById('completo').onclick=()=>{const b=params(CASOS[activo]||CASOS[0]);objetivo.set(0,-85*b.sv,0);R=250*b.sv;camara();};
-document.getElementById('vCuerpo').onchange=e=>{cuerpo.visible=e.target.checked;};
-document.getElementById('vSolido').onchange=()=>{aplicarOpacidad(+document.getElementById('opCuerpo').value);dibujar();};
 document.getElementById('vEjes').onchange=()=>dibujar();
 document.getElementById('vAng').onchange=()=>dibujar();
 document.getElementById('vCabello').onchange=e=>{bodyRaiz.traverse(o=>{if(o.userData&&o.userData.decor)o.visible=e.target.checked;});};
